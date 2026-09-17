@@ -5,11 +5,8 @@ Sistema de duas aplicações para gestão paroquial, compartilhando um banco Pos
 - **[`web/`](web)** — painel administrativo (Next.js) usado pela secretaria/comunidades para gerenciar avisos, eventos, campanhas, fiéis, relatórios e contas.
 - **[`mobile/`](mobile)** — app do fiel (Expo/React Native) com avisos, calendário, ofertas via Pix, dízimo e perfil.
 
-## Desenvolvimento
+## Documentação
 
-Cada aplicação tem seu próprio `package.json`, `.env.local` (não versionado) e instruções de setup — veja o README de cada uma:
-
-- [web/README.md](web/README.md) (se houver) ou `web/package.json` para os scripts disponíveis (`npm run dev`, `npm run build`).
-- [mobile/README.md](mobile/README.md) para rodar o app com Expo (`npx expo start`).
-
-Variáveis de ambiente necessárias (não commitadas): `DATABASE_URL`, `MERCADOPAGO_ACCESS_TOKEN`, `BETTER_AUTH_SECRET` (web) e `EXPO_PUBLIC_API_URL` (mobile).
+- **[docs/configuracao.md](docs/configuracao.md)** — como configurar o banco, as variáveis de ambiente e rodar as duas aplicações localmente.
+- **[docs/guia-de-uso.md](docs/guia-de-uso.md)** — como usar o painel e o app, seção por seção.
+- **[docs/publicacao-lojas.md](docs/publicacao-lojas.md)** — como gerar o build e publicar na App Store e no Google Play com EAS.
