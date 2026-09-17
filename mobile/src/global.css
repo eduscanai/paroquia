@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-display:
+    Spline Sans, Inter, ui-sans-serif, system-ui, sans-serif, Apple Color Emoji, Segoe UI Emoji,
+    Segoe UI Symbol, Noto Color Emoji;
+  --font-mono:
+    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace;
+  --font-rounded: 'SF Pro Rounded', 'Hiragino Maru Gothic ProN', Meiryo, 'MS PGothic', sans-serif;
+  --font-serif: Georgia, 'Times New Roman', serif;
+
+  --color-background: 255 255 255;
+  --color-primary: 124 58 237;
+  --color-primary-foreground: 255 255 255;
+  --color-foreground: 17 24 39;
+  --color-muted: 243 244 246;
+  --color-muted-foreground: 107 114 128;
+  --color-accent: 237 233 254;
+}
+
+:root[class~="dark"] {
+  --color-background: 10 9 15;
+  --color-primary: 124 58 237;
+  --color-primary-foreground: 255 255 255;
+  --color-foreground: 243 241 248;
+  --color-muted: 30 26 41;
+  --color-muted-foreground: 156 150 172;
+  --color-accent: 44 34 64;
+}

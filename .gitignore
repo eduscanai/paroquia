@@ -1,0 +1,10 @@
+# macOS
+.DS_Store
+
+# editors
+.idea/
+
+# env files (each app also ignores its own; this covers the repo root too)
+.env
+.env.local
+.env*.local
