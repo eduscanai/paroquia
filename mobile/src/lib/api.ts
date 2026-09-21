@@ -192,6 +192,24 @@ export async function buscarDizimo(): Promise<{
   }
 }
 
+export async function configurarDizimo(
+  valorMensal: number,
+): Promise<{ ok: true } | { ok: false; erro: string }> {
+  try {
+    const res = await apiFetch("/api/dizimo/me", {
+      method: "POST",
+      body: JSON.stringify({ valorMensal }),
+    });
+    const data = await res.json();
+    if (!res.ok) {
+      return { ok: false, erro: data.error ?? "Não foi possível salvar o valor do dízimo." };
+    }
+    return { ok: true };
+  } catch {
+    return { ok: false, erro: "Não foi possível conectar ao servidor." };
+  }
+}
+
 export type CobrancaPix = {
   id: string;
   qrCode: string;

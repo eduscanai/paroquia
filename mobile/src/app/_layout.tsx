@@ -50,6 +50,7 @@ export default function RootLayout() {
           <Stack.Screen name="(tabs)" />
           <Stack.Screen name="aviso/[id]" />
           <Stack.Screen name="dizimo/index" />
+          <Stack.Screen name="dizimo/configurar" />
           <Stack.Screen name="dizimo/pagamento" />
           <Stack.Screen name="dizimo/sucesso" />
           <Stack.Screen name="dizimo/historico" />

@@ -80,9 +80,23 @@ export default function DizimoScreen() {
           <ArrowLeft size={24} strokeWidth={2} color={corIcone.foreground} />
         </Pressable>
         <Text className="flex-1 text-center text-lg font-bold text-foreground">Meu dízimo</Text>
-        <Pressable hitSlop={8} className="w-8 items-end" accessibilityLabel="Configurações">
-          <Settings size={22} strokeWidth={2} color={corIcone.foreground} />
-        </Pressable>
+        {dizimista ? (
+          <Pressable
+            onPress={() =>
+              router.push({
+                pathname: "/dizimo/configurar",
+                params: { valorAtual: String(dizimista.valorMensal) },
+              })
+            }
+            hitSlop={8}
+            className="w-8 items-end"
+            accessibilityLabel="Configurações"
+          >
+            <Settings size={22} strokeWidth={2} color={corIcone.foreground} />
+          </Pressable>
+        ) : (
+          <View className="w-8" />
+        )}
       </View>
 
       {carregando ? (
@@ -90,8 +104,14 @@ export default function DizimoScreen() {
           <ActivityIndicator color="#7C3AED" />
         </View>
       ) : !dizimista ? (
-        <View className="flex-1 items-center justify-center px-6">
+        <View className="flex-1 items-center justify-center gap-4 px-6">
           <Text className="text-center text-sm text-muted-foreground">{erro}</Text>
+          <Pressable
+            onPress={() => router.push("/dizimo/configurar")}
+            className="h-12 items-center justify-center rounded-full bg-primary px-6 active:opacity-90"
+          >
+            <Text className="text-base font-bold text-primary-foreground">Quero ser dizimista</Text>
+          </Pressable>
         </View>
       ) : (
         <ScrollView

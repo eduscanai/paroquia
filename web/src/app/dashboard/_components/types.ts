@@ -52,6 +52,20 @@ export type SemDirecionamento = {
   quantidadeNaoCreditada: number;
 };
 
+export type Dizimista = {
+  id: string;
+  numero: number;
+  nome: string;
+  email: string;
+  diaVencimento: number;
+  valorMensal: number;
+  dizimistaDesde: string;
+  comunidadeId: string;
+  comunidadeNome: string;
+  comunidadeNomeCurto: string;
+  statusMesAtual: "pago" | "isento" | "em_aberto" | "pendente" | null;
+};
+
 export type Evento = {
   id: string;
   comunidadeId: string;

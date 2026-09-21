@@ -7,6 +7,7 @@ import {
   Church,
   FileBarChart,
   HandCoins,
+  HandHeart,
   LogOut,
   Megaphone,
   UserPlus,
@@ -23,6 +24,7 @@ import { cn } from "@/lib/utils";
 import { AvisosSection } from "./_components/avisos-section";
 import { CampanhasSection } from "./_components/campanhas-section";
 import { ContasSection } from "./_components/contas-section";
+import { DizimistasSection } from "./_components/dizimistas-section";
 import { EventosSection } from "./_components/eventos-section";
 import { FieisSection } from "./_components/fieis-section";
 import { RelatorioSection } from "./_components/relatorio-section";
@@ -30,6 +32,7 @@ import type {
   Aviso,
   Campanha,
   Comunidade,
+  Dizimista,
   Evento,
   Fiel,
   RelatorioDizimo,
@@ -41,6 +44,7 @@ const ABAS: { id: string; label: string; icon: LucideIcon }[] = [
   { id: "avisos", label: "Avisos", icon: Megaphone },
   { id: "eventos", label: "Eventos", icon: CalendarDays },
   { id: "fieis", label: "Fiéis", icon: Users },
+  { id: "dizimistas", label: "Dizimistas", icon: HandHeart },
   { id: "campanhas", label: "Campanhas", icon: HandCoins },
   { id: "relatorio", label: "Relatório", icon: FileBarChart },
   { id: "contas", label: "Contas", icon: UserPlus },
@@ -70,6 +74,7 @@ export default function DashboardPage() {
   const [avisos, setAvisos] = useState<Aviso[]>([]);
   const [eventos, setEventos] = useState<Evento[]>([]);
   const [fieis, setFieis] = useState<Fiel[]>([]);
+  const [dizimistas, setDizimistas] = useState<Dizimista[]>([]);
   const [campanhas, setCampanhas] = useState<Campanha[]>([]);
   const [semDirecionamento, setSemDirecionamento] = useState<SemDirecionamento>({
     total: 0,
@@ -84,18 +89,21 @@ export default function DashboardPage() {
   const carregarDados = useCallback(async (comunidadeIds: string[]) => {
     setCarregandoDados(true);
     try {
-      const [resAvisos, resEventos, resFieis, resCampanhas, resRelatorio] = await Promise.all([
-        fetch("/api/avisos"),
-        fetch("/api/eventos"),
-        fetch("/api/comunidade/fieis"),
-        fetch("/api/campanhas"),
-        fetch("/api/relatorio"),
-      ]);
-      const [dadosAvisos, dadosEventos, dadosFieis, dadosCampanhas, dadosRelatorio] =
+      const [resAvisos, resEventos, resFieis, resDizimistas, resCampanhas, resRelatorio] =
+        await Promise.all([
+          fetch("/api/avisos"),
+          fetch("/api/eventos"),
+          fetch("/api/comunidade/fieis"),
+          fetch("/api/comunidade/dizimistas"),
+          fetch("/api/campanhas"),
+          fetch("/api/relatorio"),
+        ]);
+      const [dadosAvisos, dadosEventos, dadosFieis, dadosDizimistas, dadosCampanhas, dadosRelatorio] =
         await Promise.all([
           resAvisos.json(),
           resEventos.json(),
           resFieis.json(),
+          resDizimistas.json(),
           resCampanhas.json(),
           resRelatorio.json(),
         ]);
@@ -111,6 +119,7 @@ export default function DashboardPage() {
         ),
       );
       setFieis(dadosFieis.fieis ?? []);
+      setDizimistas(dadosDizimistas.dizimistas ?? []);
       setCampanhas(
         ((dadosCampanhas.campanhas ?? []) as Campanha[]).filter(
           (campanha) => campanha.comunidadeId === null || comunidadeIds.includes(campanha.comunidadeId),
@@ -187,6 +196,13 @@ export default function DashboardPage() {
   const fieisFiltrados = useMemo(
     () => (comunidadeFiltro ? fieis.filter((f) => f.comunidadeId === comunidadeFiltro) : fieis),
     [fieis, comunidadeFiltro],
+  );
+  const dizimistasFiltrados = useMemo(
+    () =>
+      comunidadeFiltro
+        ? dizimistas.filter((d) => d.comunidadeId === comunidadeFiltro)
+        : dizimistas,
+    [dizimistas, comunidadeFiltro],
   );
   const campanhasFiltradas = useMemo(
     () =>
@@ -368,6 +384,12 @@ export default function DashboardPage() {
                   fieis={fieisFiltrados}
                   carregando={carregandoDados}
                   comunidades={comunidades}
+                />
+              ) : aba === "dizimistas" ? (
+                <DizimistasSection
+                  dizimistas={dizimistasFiltrados}
+                  carregando={carregandoDados}
+                  multiComunidade={multiComunidade}
                 />
               ) : aba === "campanhas" ? (
                 <CampanhasSection
